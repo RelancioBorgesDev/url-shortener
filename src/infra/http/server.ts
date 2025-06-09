@@ -6,7 +6,7 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod";
 import "dotenv/config";
-import { env } from "../env/env-schema.ts";
+import { env } from "../env/env.ts";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node --env-file=.env --experimental-strip-types --watch --no-warnings src/http/server.ts",
-    "start": "node --experimental-strip-types --no-warnings src/http/server.ts"
+    "dev": "node --env-file=.env --experimental-strip-types --watch --no-warnings src/infra/http/server.ts",
+    "start": "node --experimental-strip-types --no-warnings src/infra/http/server.ts"
   },
   "keywords": [],
   "author": "",
