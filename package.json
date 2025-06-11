@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node --env-file=.env --experimental-strip-types --watch --no-warnings src/infra/http/server.ts",
-    "start": "node --experimental-strip-types --no-warnings src/infra/http/server.ts"
+    "dev": "tsx watch src/infra/http/server.ts",
+    "start": "tsx src/infra/http/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,7 @@
     "@types/pg": "^8.15.4",
     "dotenv": "^16.5.0",
     "drizzle-kit": "^0.31.1",
+    "tsx": "^4.20.1",
     "typescript": "^5.8.3"
   }
 }
