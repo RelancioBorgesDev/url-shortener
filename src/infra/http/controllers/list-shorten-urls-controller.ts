@@ -16,7 +16,7 @@ export async function listShortenUrlsController(
     return reply.status(400).send({ error: "Erro ao listar as URLs" });
   }
 
-  return reply.status(201).send({
+  return reply.status(200).send({
     result: ListShortenUrlsPresenter.toHTTP(result.value.urls),
   });
 }
