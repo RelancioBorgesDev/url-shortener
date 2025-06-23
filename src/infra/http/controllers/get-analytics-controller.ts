@@ -8,7 +8,6 @@ export async function getAnalyticsController(
   reply: FastifyReply
 ) {
   const { shortCode } = request.params as { shortCode: string };
-  console.log(shortCode)
 
   const urlRepository = new UrlRepository();
   const analyticsRepository = new AnalyticsRepository();

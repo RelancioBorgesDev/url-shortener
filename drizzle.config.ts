@@ -3,8 +3,6 @@ import { env } from "./src/infra/env/env.ts";
 
 if (!env.DATABASE_URL) {
   throw new Error("DATABASE_URL must be configured");
-}else{
-  console.log(env.DATABASE_URL)
 }
 
 export default defineConfig({
