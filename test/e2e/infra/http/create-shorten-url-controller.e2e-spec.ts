@@ -15,7 +15,7 @@ describe("Create Shorten URL - E2E", () => {
 
   it("should create a shortened URL", async () => {
     const response = await request(app.server)
-      .post("/shorten")
+      .post("/api/links")
       .send({ url: "https://google.com" });
 
     expect(response.status).toBe(201);
