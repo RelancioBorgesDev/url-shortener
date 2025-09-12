@@ -19,5 +19,5 @@ export async function deleteShortenUrlController(
   }
 
   const success = (result as { value: { message: string } }).value;
-  return reply.status(200).send({ result: success.message });
+  return reply.status(200).send({ message: success.message });
 }

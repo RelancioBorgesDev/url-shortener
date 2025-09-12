@@ -1,4 +1,5 @@
-import { Either, right } from "../../../../core/either.ts";
+// Fixed create-shorten-url-use-case.ts
+import { Either, left, right } from "../../../../core/either.ts";
 import { generateShortCode } from "../../../../infra/utils/generate-short-code.ts";
 import { Url } from "../../enterprise/entities/url.ts";
 import { UrlRepository } from "../repositories/url-repository.ts";
@@ -7,7 +8,10 @@ interface CreateShortenUrlUseCaseRequest {
   url: string;
 }
 
-type CreateShortenUrlUseCaseResponse = Either<null, { shorten_url: Url }>;
+type CreateShortenUrlUseCaseResponse = Either<
+  { error: string },
+  { shorten_url: Url }
+>;
 
 export class CreateShortenUrlUseCase {
   private urlRepository: UrlRepository;
@@ -16,22 +20,49 @@ export class CreateShortenUrlUseCase {
     this.urlRepository = urlRepository;
   }
 
+  private normalizeUrl(url: string): string {
+    url = url.trim();
+    if (!url.match(/^https?:\/\//i)) {
+      url = "https://" + url;
+    }
+    return url;
+  }
+
+  private isValidUrl(url: string): boolean {
+    try {
+      new URL(url);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   async execute({
     url,
   }: CreateShortenUrlUseCaseRequest): Promise<CreateShortenUrlUseCaseResponse> {
-    const shortCode = generateShortCode();
-    const shortUrl = `https://sho.rt/${shortCode}`;
+    try {
+      const normalizedUrl = this.normalizeUrl(url);
 
-    const shortenUrl = Url.create({
-      originalUrl: url,
-      shortUrl: shortUrl,
-      shortCode: shortCode,
-      clicks: 0,
-      createdAt: new Date(),
-    });
+      if (!this.isValidUrl(normalizedUrl)) {
+        return left({ error: "URL inválida" });
+      }
 
-    await this.urlRepository.create(shortenUrl);
+      const shortCode = generateShortCode();
+      const shortUrl = `http://sho.rt/${shortCode}`;
 
-    return right({ shorten_url: shortenUrl });
+      const shortenUrl = Url.create({
+        originalUrl: normalizedUrl,
+        shortUrl: shortUrl,
+        shortCode: shortCode,
+        clicks: 0,
+        createdAt: new Date(),
+      });
+
+      await this.urlRepository.create(shortenUrl);
+      return right({ shorten_url: shortenUrl });
+    } catch (error) {
+      console.error("Error creating shortened URL:", error);
+      return left({ error: "Erro interno ao criar URL" });
+    }
   }
 }

@@ -17,6 +17,6 @@ export async function listShortenUrlsController(
   }
 
   return reply.status(200).send({
-    result: ListShortenUrlsPresenter.toHTTP(result.value.urls),
+    urls: ListShortenUrlsPresenter.toHTTP(result.value.urls),
   });
 }
