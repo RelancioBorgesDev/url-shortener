@@ -1,6 +1,6 @@
 import Fastify from "fastify";
 import { createShortenUrlController } from "../../../src/infra/http/controllers/create-shorten-url-controller.ts";
-import { deleteShortenUrlController } from "../../../src/infra/http/controllers/delete-shorten-url-controller.ts";
+import { deleteShortenUrlController } from "../../../src/infra/http/controllers/delete-shorten-url-controller";
 import { listShortenUrlsController } from "../../../src/infra/http/controllers/list-shorten-urls-controller.ts";
 import { getAnalyticsController } from "../../../src/infra/http/controllers/get-analytics-controller.ts";
 

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "build": "tsup src/infra/http/server.ts --format esm --dts --out-dir dist --external dotenv",
     "dev": "tsx watch src/infra/http/server.ts",
     "start": "tsx src/infra/http/server.ts",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
@@ -16,6 +17,7 @@
   "description": "",
   "dependencies": {
     "@fastify/cors": "^11.0.1",
+    "dotenv": "^17.2.2",
     "drizzle-orm": "^0.44.2",
     "fastify": "^5.3.3",
     "fastify-type-provider-zod": "^4.0.2",
@@ -29,11 +31,11 @@
     "@types/node": "^22.15.30",
     "@types/pg": "^8.15.4",
     "@types/supertest": "^6.0.3",
-    "dotenv": "^16.5.0",
     "drizzle-kit": "^0.31.1",
     "jest": "^29.7.0",
     "supertest": "^7.1.1",
     "ts-jest": "^29.4.0",
+    "tsup": "^8.5.0",
     "tsx": "^4.20.1",
     "typescript": "^5.8.3"
   }
