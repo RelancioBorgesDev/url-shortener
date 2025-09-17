@@ -48,7 +48,8 @@ export class CreateShortenUrlUseCase {
       }
 
       const shortCode = generateShortCode();
-      const shortUrl = `http://sho.rt/${shortCode}`;
+      /* Se tiver um dominio configurado, usar ele no local do "localhost:3000" */
+      const shortUrl = `http://localhost:3000/${shortCode}`;
 
       const shortenUrl = Url.create({
         originalUrl: normalizedUrl,

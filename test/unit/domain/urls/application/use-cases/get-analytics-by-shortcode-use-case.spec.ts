@@ -1,8 +1,8 @@
-import { GetAnalyticsByShortCodeUseCase } from "../../../../../src/domain/urls/application/use-cases/get-analytics-by-shortcode-use-case.ts";
-import { Analytics } from "../../../../../src/domain/urls/enterprise/entities/analytics.ts";
-import { Url } from "../../../../../src/domain/urls/enterprise/entities/url.ts";
-import { InMemoryAnalyticsRepository } from "../../../../repositories/in-memory-analytics-repository.ts";
-import { InMemoryUrlRepository } from "../../../../repositories/in-memory-url-repository.ts";
+import { GetAnalyticsByShortCodeUseCase } from "../../../../../../src/domain/urls/application/use-cases/get-analytics-by-shortcode-use-case.ts";
+import { Analytics } from "../../../../../../src/domain/urls/enterprise/entities/analytics.ts";
+import { Url } from "../../../../../../src/domain/urls/enterprise/entities/url.ts";
+import { InMemoryAnalyticsRepository } from "../../../../../repositories/in-memory-analytics-repository.ts";
+import { InMemoryUrlRepository } from "../../../../../repositories/in-memory-url-repository.ts";
 
 let inMemoryUrlRepository: InMemoryUrlRepository;
 let analyticsRepository: InMemoryAnalyticsRepository;

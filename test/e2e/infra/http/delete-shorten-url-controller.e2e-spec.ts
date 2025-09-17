@@ -18,7 +18,7 @@ describe("Delete Shorten URL - E2E", () => {
       .post("/api/links")
       .send({ url: "https://google.com" });
 
-    const { shortCode } = createResponse.body.result;
+    const { shortCode } = createResponse.body.url;
 
     const deleteResponse = await request(app.server).delete(
       `/api/links/${shortCode}`

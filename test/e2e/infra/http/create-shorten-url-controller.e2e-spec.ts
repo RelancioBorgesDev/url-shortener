@@ -19,7 +19,7 @@ describe("Create Shorten URL - E2E", () => {
       .send({ url: "https://google.com" });
 
     expect(response.status).toBe(201);
-    expect(response.body.result).toMatchObject({
+    expect(response.body.url).toMatchObject({
       originalUrl: "https://google.com",
       shortUrl: expect.stringContaining("http"),
       shortCode: expect.any(String),
@@ -27,8 +27,10 @@ describe("Create Shorten URL - E2E", () => {
     });
 
     // Testes adicionais opcionais:
-    expect(response.body.result.createdAt).toBeDefined();
-    expect(response.body.result.expiresAt).toBeDefined();
-    expect(response.body.result.id).toBeDefined();
+    expect(response.body.url.createdAt).toBeDefined();
+    expect(response.body.url.expiresAt).toBeDefined();
+    expect(response.body.url.id).toBeDefined();
   });
+
+ 
 });

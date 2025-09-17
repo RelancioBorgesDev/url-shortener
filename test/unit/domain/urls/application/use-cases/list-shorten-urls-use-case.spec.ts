@@ -1,6 +1,6 @@
-import { ListShortenUrlsUseCase } from "../../../../../src/domain/urls/application/use-cases/list-shorten-urls-use-case.ts";
-import { Url } from "../../../../../src/domain/urls/enterprise/entities/url.ts";
-import { InMemoryUrlRepository } from "../../../../repositories/in-memory-url-repository.ts";
+import { ListShortenUrlsUseCase } from "../../../../../../src/domain/urls/application/use-cases/list-shorten-urls-use-case.ts";
+import { Url } from "../../../../../../src/domain/urls/enterprise/entities/url.ts";
+import { InMemoryUrlRepository } from "../../../../../repositories/in-memory-url-repository.ts";
 
 let inMemoryUrlRepository: InMemoryUrlRepository;
 let sut: ListShortenUrlsUseCase;

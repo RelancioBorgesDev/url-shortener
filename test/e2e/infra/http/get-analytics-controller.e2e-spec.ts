@@ -18,7 +18,7 @@ describe("Get Analytics Controller - E2E", () => {
       .post("/api/links")
       .send({ url: "https://google.com" });
 
-    const { shortCode } = createResponse.body.result;
+    const { shortCode } = createResponse.body.url;
 
     const response = await request(app.server).get(
       `/api/analytics/${shortCode}`
