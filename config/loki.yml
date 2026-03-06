@@ -4,14 +4,20 @@ server:
   http_listen_address: 0.0.0.0
   http_listen_port: 3101
 
-memberlist:
-  join_members: ["loki"]
-  bind_addr: [0.0.0.0]
-  bind_port: 7946
+common:
+  path_prefix: /loki
+  storage:
+    filesystem:
+      chunks_directory: /loki/chunks
+      rules_directory: /loki/rules
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
 
 schema_config:
   configs:
-    - from: 2025-01-01
+    - from: 2020-10-24
       store: tsdb
       object_store: filesystem
       schema: v13
@@ -20,9 +26,7 @@ schema_config:
         period: 24h
 
 limits_config:
-  discover_log_levels: true
+  volume_enabled: true
 
-common:
-  path_prefix: /loki
-  replication_factor: 1
-  compactor_address: http://loki:3101
+compactor:
+  working_directory: /loki/compactor
