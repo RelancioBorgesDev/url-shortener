@@ -5,6 +5,7 @@ import {
   timestamp,
   uuid,
   integer,
+  index,
 } from "drizzle-orm/pg-core";
 
 export const urls = pgTable("urls", {
@@ -15,4 +16,10 @@ export const urls = pgTable("urls", {
   clicks: integer("clicks").default(0).notNull(),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
   expiresAt: timestamp("expires_at", { mode: "date" }),
+}, (table) => {
+  return {
+    shortCodeIdx: index("idx_urls_short_code").on(table.shortCode),
+    createdAtIdx: index("idx_urls_created_at").on(table.createdAt),
+    expiresAtIdx: index("idx_urls_expires_at").on(table.expiresAt),
+  };
 });
