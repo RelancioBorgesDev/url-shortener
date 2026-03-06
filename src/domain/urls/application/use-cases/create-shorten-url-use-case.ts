@@ -30,7 +30,26 @@ export class CreateShortenUrlUseCase {
 
   private isValidUrl(url: string): boolean {
     try {
-      new URL(url);
+      const parsedUrl = new URL(url);
+      const hostname = parsedUrl.hostname.toLowerCase();
+      
+      const invalidProtocols = ["javascript:", "data:", "vbscript:"];
+      if (invalidProtocols.some((p: string) => url.toLowerCase().startsWith(p))) {
+        return false;
+      }
+      
+      const privateHostnames = [
+        "localhost",
+        "127.0.0.1",
+        "0.0.0.0",
+        "::1",
+        "metadata.google.internal",
+        "metadata.google",
+      ];
+      if (privateHostnames.includes(hostname) || hostname.startsWith("127.") || hostname.startsWith("192.168.") || hostname.startsWith("10.") || hostname.startsWith("172.")) {
+        return false;
+      }
+      
       return true;
     } catch (_) {
       return false;
