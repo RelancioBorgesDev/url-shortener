@@ -5,6 +5,8 @@ import { db } from "../client.ts";
 import { urls } from "../schema/urls.ts";
 import { UniqueEntityID } from "../../../core/entities/unique-entity-id.ts";
 import { InMemoryCache } from "../../cache/in-memory-cache.ts";
+import { metrics } from "../../metrics/metrics.ts";
+import { logger } from "../../logging/logger.ts";
 
 const urlCache = new InMemoryCache<Url>(300);
 
@@ -27,7 +29,7 @@ export class UrlRepository implements UrlInterface {
         )
       );
     } catch (err) {
-      console.error("Erro ao buscar URLs:", err);
+      logger.error("Error fetching URLs", { error: err });
       throw err;
     }
   }
@@ -35,8 +37,11 @@ export class UrlRepository implements UrlInterface {
   async findByShortCode(shortCode: string): Promise<Url | null> {
     const cached = urlCache.get(shortCode);
     if (cached) {
+      metrics.cacheHits.inc();
       return cached;
     }
+
+    metrics.cacheMisses.inc();
 
     const result = await db
       .select()
@@ -86,8 +91,9 @@ export class UrlRepository implements UrlInterface {
         createdAt: createdAt,
         expiresAt: expiresAt,
       });
+      metrics.urlsCreated.inc();
     } catch (error) {
-      console.error("Erro ao criar nova url:", error);
+      logger.error("Error creating URL", { error });
       throw new Error("Erro ao criar nova url");
     }
   }
@@ -100,8 +106,9 @@ export class UrlRepository implements UrlInterface {
           clicks: sql`clicks + 1`,
         })
         .where(eq(urls.id, id));
+      metrics.urlClicks.inc();
     } catch (error) {
-      console.error("Erro ao incrementar os cliques:", error);
+      logger.error("Error incrementing clicks", { error });
       throw new Error("Erro ao incrementar os cliques");
     }
   }
@@ -123,7 +130,7 @@ export class UrlRepository implements UrlInterface {
 
       return deleted.deletedId;
     } catch (error) {
-      console.error("Erro ao deletar a URL:", error);
+      logger.error("Error deleting URL", { error });
       throw new Error("Erro ao deletar a URL");
     }
   }
