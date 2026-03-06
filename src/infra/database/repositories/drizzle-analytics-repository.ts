@@ -9,7 +9,7 @@ import { UniqueEntityID } from "../../../core/entities/unique-entity-id.ts";
 export class AnalyticsRepository implements AnalyticsInterface {
   async create(analytics: Analytics) {
     await db.insert(schemaAnalytics).values({
-      url_id: analytics.urlId,
+      urlId: analytics.urlId,
       ipAddress: analytics.ipAddress,
       userAgent: analytics.userAgent,
       referrer: analytics.referrer,
@@ -22,12 +22,12 @@ export class AnalyticsRepository implements AnalyticsInterface {
     const results = await db
       .select()
       .from(schemaAnalytics)
-      .where(eq(schemaAnalytics.url_id, urlId));
+      .where(eq(schemaAnalytics.urlId, urlId));
 
     return results.map((row) =>
       Analytics.create(
         {
-          urlId: row.url_id!,
+          urlId: row.urlId!,
           ipAddress: row.ipAddress ?? "",
           userAgent: row.userAgent ?? "",
           referrer: row.referrer ?? "",

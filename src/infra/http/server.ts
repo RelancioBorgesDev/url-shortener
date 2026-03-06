@@ -9,6 +9,7 @@ import { env } from "../env/env.ts";
 import { shortenRoutes } from "./routes/shorten.routes.ts";
 import { analyticsRoutes } from "./routes/analytics.routes.ts";
 import { redirectRoutes } from "./routes/redirect.routes.ts";
+import { healthRoutes } from "./routes/health.routes.ts";
 import "dotenv/config";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
@@ -47,10 +48,28 @@ app.register(fastifyRateLimit, {
   allowList: ["127.0.0.1"],
 });
 
+app.register(healthRoutes);
 app.register(shortenRoutes);
 app.register(analyticsRoutes);
 app.register(redirectRoutes);
 
-app.listen({ host: env.HOSTNAME, port: env.PORT }).then(() => {
-  console.log("URL Shortcut HTTP Server running");
-});
+const start = async () => {
+  try {
+    await app.listen({ host: env.HOSTNAME, port: env.PORT });
+    console.log("URL Shortcut HTTP Server running");
+  } catch (err) {
+    app.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();
+
+const shutdown = async (signal: string) => {
+  console.log(`\n${signal} received, shutting down gracefully...`);
+  await app.close();
+  process.exit(0);
+};
+
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
