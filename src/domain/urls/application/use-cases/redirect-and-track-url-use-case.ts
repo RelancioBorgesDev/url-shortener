@@ -52,7 +52,9 @@ export class RedirectAndTrackUseCase {
       accessedAt: new Date(),
     });
 
-    await this.analyticsRepository.create(analytics);
+    this.analyticsRepository.create(analytics).catch((err) => {
+      console.error("Failed to create analytics:", err);
+    });
 
     return right({
       originalUrl: url.originalUrl,
