@@ -11,6 +11,9 @@ const envSchema = z.object({
   POSTGRES_PASSWORD: z.string(),
   POSTGRES_DB: z.string(),
   DATABASE_URL: z.string().url(),
+  RATE_LIMIT_MAX: z.coerce.number().default(1000),
+  RATE_LIMIT_TIME_WINDOW: z.string().default("1 minute"),
+  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 });
 
 export const env = envSchema.parse(process.env);
