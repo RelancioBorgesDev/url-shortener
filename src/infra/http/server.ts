@@ -14,12 +14,56 @@ import "dotenv/config";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import fastifyRateLimit from "@fastify/rate-limit";
+import fastifyRequestId from "fastify-request-id";
+import { metricsPlugin, metrics } from "../metrics/metrics.ts";
+import { logger } from "../logging/logger.ts";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
+app.register(fastifyRequestId);
+
+app.addHook("onRequest", async (request) => {
+  logger.info("Incoming request", {
+    requestId: request.id,
+    method: request.method,
+    url: request.url,
+  });
+});
+
+app.addHook("onResponse", async (request, reply) => {
+  const duration = reply.elapsedTime / 1000;
+  
+  const route = request.routeOptions?.url || request.url;
+  const labels = {
+    method: request.method,
+    route: route,
+    status_code: reply.statusCode.toString(),
+  };
+
+  metrics.httpRequestDuration.observe(labels, duration);
+  metrics.httpRequestTotal.inc(labels);
+
+  logger.info("Request completed", {
+    requestId: request.id,
+    method: request.method,
+    url: request.url,
+    statusCode: reply.statusCode,
+    duration: `${duration.toFixed(3)}s`,
+  });
+});
+
+app.addHook("onError", async (request, reply, error) => {
+  logger.error("Request error", {
+    requestId: request.id,
+    method: request.method,
+    url: request.url,
+    error: error.message,
+  });
+});
+
 app.setSerializerCompiler(serializerCompiler);
 app.setValidatorCompiler(validatorCompiler);
-if (process.env.NODE_ENV === "development") {
+if (env.NODE_ENV === "development") {
   app.register(fastifySwagger, {
     openapi: {
       info: {
@@ -43,11 +87,12 @@ if (process.env.NODE_ENV === "development") {
   });
 }
 app.register(fastifyRateLimit, {
-  max: 1000,
-  timeWindow: "1 minute",
+  max: env.RATE_LIMIT_MAX,
+  timeWindow: env.RATE_LIMIT_TIME_WINDOW,
   allowList: ["127.0.0.1"],
 });
 
+app.register(metricsPlugin);
 app.register(healthRoutes);
 app.register(shortenRoutes);
 app.register(analyticsRoutes);
@@ -56,9 +101,9 @@ app.register(redirectRoutes);
 const start = async () => {
   try {
     await app.listen({ host: env.HOSTNAME, port: env.PORT });
-    console.log("URL Shortcut HTTP Server running");
+    logger.info("Server started", { port: env.PORT, hostname: env.HOSTNAME });
   } catch (err) {
-    app.log.error(err);
+    logger.errorWithStack("Failed to start server", err as Error);
     process.exit(1);
   }
 };
@@ -66,7 +111,7 @@ const start = async () => {
 start();
 
 const shutdown = async (signal: string) => {
-  console.log(`\n${signal} received, shutting down gracefully...`);
+  logger.info("Shutting down gracefully", { signal });
   await app.close();
   process.exit(0);
 };
