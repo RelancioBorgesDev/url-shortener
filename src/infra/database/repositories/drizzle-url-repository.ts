@@ -4,6 +4,9 @@ import { Url } from "../../../domain/urls/enterprise/entities/url.ts";
 import { db } from "../client.ts";
 import { urls } from "../schema/urls.ts";
 import { UniqueEntityID } from "../../../core/entities/unique-entity-id.ts";
+import { InMemoryCache } from "../../cache/in-memory-cache.ts";
+
+const urlCache = new InMemoryCache<Url>(300);
 
 export class UrlRepository implements UrlInterface {
   async findAllUrls() {
@@ -30,6 +33,11 @@ export class UrlRepository implements UrlInterface {
   }
 
   async findByShortCode(shortCode: string): Promise<Url | null> {
+    const cached = urlCache.get(shortCode);
+    if (cached) {
+      return cached;
+    }
+
     const result = await db
       .select()
       .from(urls)
@@ -52,6 +60,8 @@ export class UrlRepository implements UrlInterface {
       },
       new UniqueEntityID(data.id)
     );
+
+    urlCache.set(shortCode, url, 300);
 
     return url;
   }
@@ -108,6 +118,8 @@ export class UrlRepository implements UrlInterface {
       if (!deleted) {
         throw new Error("URL não encontrada");
       }
+
+      urlCache.delete(shortCode);
 
       return deleted.deletedId;
     } catch (error) {
