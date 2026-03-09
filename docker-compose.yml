@@ -116,9 +116,11 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     restart: always
+    user: "472"
     ports:
       - 3000:3000
     volumes:
+      - grafana_data:/var/lib/grafana
       - ./config/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
       - ./config/dashboards:/etc/grafana/provisioning/dashboards
     environment:
@@ -131,6 +133,8 @@ services:
       - prometheus
       - tempo
       - mimir
+    networks:
+      - url-shortcut_default
 
   promtail:
     image: grafana/promtail:latest
@@ -148,3 +152,4 @@ networks:
 
 volumes:
   postgres_data:
+  grafana_data:
