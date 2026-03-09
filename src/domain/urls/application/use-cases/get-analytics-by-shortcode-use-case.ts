@@ -40,7 +40,7 @@ export class GetAnalyticsByShortCodeUseCase {
     );
 
     return right({
-      totalClicks: url.clicks,
+      totalClicks: analytics.length,
       analytics: analytics.map((a) => ({
         ipAddress: a.ipAddress,
         userAgent: a.userAgent,
