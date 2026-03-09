@@ -1,4 +1,4 @@
-# 🔗 URL Shortener API
+# 🔗 URL Shortener API / API de Encurtador de URLs
 
 <div align="center">
 
@@ -10,28 +10,39 @@
 [![Test](https://img.shields.io/badge/Test-Passing-green?style=for-the-badge)]()
 [![License](https://img.shields.io/badge/License-ISC-blue?style=for-the-badge)]()
 
+[English](#english) | [Português](#português)
+
+---
+
+## English
+
 A high-performance URL shortener built with Clean Architecture, focusing on observability, security, and scalability.
 
-</div>
+---
+
+## Português
+
+Um encurtador de URLs de alta performance construído com Arquitetura Limpa, focado em observabilidade, segurança e escalabilidade.
 
 ---
 
-## 📋 Table of Contents
+## 📋 Table of Contents / Índice
 
-- [Architecture](#-architecture)
-- [Technology Stack](#-technology-stack)
-- [Features](#-features)
-- [Getting Started](#-getting-started)
-- [API Reference](#-api-reference)
-- [Environment Variables](#-environment-variables)
-- [Observability](#-observability)
-- [Project Structure](#-project-structure)
-- [Testing](#-testing)
-- [Deployment](#-deployment)
+- [Architecture / Arquitetura](#-architecture--arquitetura)
+- [Technology Stack / Stack de Tecnologias](#-technology-stack--stack-de-tecnologias)
+- [Features / Funcionalidades](#-features--funcionalidades)
+- [Getting Started / Primeiros Passos](#-getting-started--primeiros-passos)
+- [API Reference / Referência da API](#-api-reference--referência-da-api)
+- [Swagger Documentation / Documentação Swagger](#-swagger-documentation--documentação-swagger)
+- [Environment Variables / Variáveis de Ambiente](#-environment-variables--variáveis-de-ambiente)
+- [Observability / Observabilidade](#-observability--observabilidade)
+- [Project Structure / Estrutura do Projeto](#-project-structure--estrutura-do-projeto)
+- [Testing / Testes](#-testing--testes)
+- [Deployment / Implantação](#-deployment--implantação)
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture / Arquitetura
 
 ```mermaid
 graph TB
@@ -92,7 +103,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Technology Stack / Stack de Tecnologias
 
 | Category | Technology | Version | Description |
 |----------|------------|---------|-------------|
@@ -120,7 +131,7 @@ sequenceDiagram
 
 ---
 
-## ✨ Features
+## ✨ Features / Funcionalidades
 
 ### Core Features
 - ✅ **URL Shortening** - Create short codes with auto-generation
@@ -147,7 +158,7 @@ sequenceDiagram
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started / Primeiros Passos
 
 ### Prerequisites
 
@@ -214,7 +225,31 @@ RATE_LIMIT_TIME_WINDOW=1 minute
 
 ---
 
-## 📖 API Reference
+## 📖 API Reference / Referência da API
+
+### Swagger Documentation / Documentação Swagger
+
+The API includes interactive Swagger documentation for easy exploration and testing.
+
+**Access / Acesso:** `http://localhost:3333/docs`
+
+#### English
+
+The Swagger UI provides:
+- Interactive API exploration
+- Request/response examples
+- Schema validation
+- Online testing capabilities
+
+#### Português
+
+O Swagger UI oferece:
+- Exploração interativa da API
+- Exemplos de requisição/resposta
+- Validação de schema
+- Capacidades de teste online
+
+---
 
 ### Base URL
 
@@ -376,7 +411,7 @@ url_shortener_clicks_total 1234
 
 ---
 
-## ⚙️ Environment Variables
+## ⚙️ Environment Variables / Variáveis de Ambiente
 
 | Variable | Type | Default | Description |
 |----------|------|---------|-------------|
@@ -392,7 +427,7 @@ url_shortener_clicks_total 1234
 
 ---
 
-## 📊 Observability
+## 📊 Observability / Observabilidade
 
 ### Metrics Endpoint
 
@@ -442,7 +477,7 @@ Import the included Grafana dashboard for:
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure / Estrutura do Projeto
 
 ```
 url-shortcut/
@@ -534,7 +569,7 @@ graph TB
 
 ---
 
-## 🧪 Testing
+## 🧪 Testing / Testes
 
 ### Run All Tests
 
@@ -564,7 +599,7 @@ Coverage:    [See Jest output]
 
 ---
 
-## 🚢 Deployment
+## 🚢 Deployment / Implantação
 
 ### Docker Compose (Development)
 
