@@ -28,6 +28,8 @@ services:
       - "traefik.http.services.shortener.loadbalancer.server.port=3333"
       # - "traefik.http.routers.shortener.entrypoints=websecure"
       # - "traefik.http.routers.shortener.tls.certresolver=myresolver"
+    networks:
+      - url-shortcut_default
 
   traefik:
     image: traefik:v3.1.5
@@ -118,6 +120,7 @@ services:
       - 3000:3000
     volumes:
       - ./config/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+      - ./config/dashboards:/etc/grafana/provisioning/dashboards
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
@@ -134,7 +137,10 @@ services:
     container_name: promtail
     volumes:
       - /var/log:/var/log
+      - ./config/promtail.yml:/etc/promtail/config.yml
     command: ["-config.file=/etc/promtail/config.yml"]
+    networks:
+      - url-shortcut_default
 
 networks:
   url-shortcut_default:
