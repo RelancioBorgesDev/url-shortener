@@ -56,7 +56,7 @@
       "targets": [
         {
           "datasource": {"type": "prometheus", "uid": "prometheus"},
-          "expr": "sum(rate(http_requests_total[5m])) by (route)",
+          "expr": "sum(rate(url_shortener_http_requests_total[5m])) by (route)",
           "legendFormat": "{{route}}",
           "refId": "A"
         }
@@ -111,13 +111,13 @@
       "targets": [
         {
           "datasource": {"type": "prometheus", "uid": "prometheus"},
-          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, route))",
+          "expr": "histogram_quantile(0.95, sum(rate(url_shortener_http_duration_seconds_bucket[5m])) by (le, route))",
           "legendFormat": "p95 - {{route}}",
           "refId": "A"
         },
         {
           "datasource": {"type": "prometheus", "uid": "prometheus"},
-          "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, route))",
+          "expr": "histogram_quantile(0.99, sum(rate(url_shortener_http_duration_seconds_bucket[5m])) by (le, route))",
           "legendFormat": "p99 - {{route}}",
           "refId": "B"
         }
@@ -363,7 +363,7 @@
       "targets": [
         {
           "datasource": {"type": "prometheus", "uid": "prometheus"},
-          "expr": "sum(http_requests_total{status_code=~\"5..\"})",
+          "expr": "sum(url_shortener_http_requests_total{status_code=~\"5..\"})",
           "refId": "A"
         }
       ],
@@ -404,7 +404,7 @@
       "targets": [
         {
           "datasource": {"type": "prometheus", "uid": "prometheus"},
-          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+          "expr": "histogram_quantile(0.95, sum(rate(url_shortener_http_duration_seconds_bucket[5m])) by (le))",
           "refId": "A"
         }
       ],

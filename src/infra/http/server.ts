@@ -31,9 +31,17 @@ app.addHook("onRequest", async (request) => {
 });
 
 app.addHook("onResponse", async (request, reply) => {
+  if (request.url === '/metrics') return;
+
   const duration = reply.elapsedTime / 1000;
   
-  const route = request.routeOptions?.url || request.url;
+  let route = 'unknown';
+  try {
+    route = request.routeOptions?.url || request.url.split('?')[0] || 'unknown';
+  } catch {
+    route = request.url.split('?')[0] || 'unknown';
+  }
+  
   const labels = {
     method: request.method,
     route: route,
