@@ -3,24 +3,7 @@ import { FastifyInstance } from "fastify";
 
 const register = new client.Registry();
 
-register.setDefaultLabels({
-  app: "url-shortener",
-});
-
 client.collectDefaultMetrics({ register });
-
-const httpRequestDuration = new client.Histogram({
-  name: "url_shortener_http_duration_seconds",
-  help: "Duration of HTTP requests in seconds",
-  labelNames: ["method", "route", "status_code"],
-  buckets: [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 2, 5],
-});
-
-const httpRequestTotal = new client.Counter({
-  name: "url_shortener_http_requests_total",
-  help: "Total number of HTTP requests",
-  labelNames: ["method", "route", "status_code"],
-});
 
 const urlClicks = new client.Counter({
   name: "url_shortener_clicks_total",
@@ -42,8 +25,6 @@ const cacheMisses = new client.Counter({
   help: "Total number of cache misses",
 });
 
-register.registerMetric(httpRequestDuration);
-register.registerMetric(httpRequestTotal);
 register.registerMetric(urlClicks);
 register.registerMetric(urlsCreated);
 register.registerMetric(cacheHits);
@@ -51,8 +32,6 @@ register.registerMetric(cacheMisses);
 
 export const metrics = {
   register,
-  httpRequestDuration,
-  httpRequestTotal,
   urlClicks,
   urlsCreated,
   cacheHits,
@@ -64,9 +43,4 @@ export async function metricsPlugin(fastify: FastifyInstance) {
     reply.header("Content-Type", register.contentType);
     return register.metrics();
   });
-}
-
-export function startMetricsTimer(labels: Record<string, string>) {
-  const end = httpRequestDuration.startTimer(labels);
-  return () => end(labels);
 }

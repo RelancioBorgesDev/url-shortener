@@ -41,15 +41,6 @@ app.addHook("onResponse", async (request, reply) => {
   } catch {
     route = request.url.split('?')[0] || 'unknown';
   }
-  
-  const labels = {
-    method: request.method,
-    route: route,
-    status_code: reply.statusCode.toString(),
-  };
-
-  metrics.httpRequestDuration.observe(labels, duration);
-  metrics.httpRequestTotal.inc(labels);
 
   logger.info("Request completed", {
     requestId: request.id,
