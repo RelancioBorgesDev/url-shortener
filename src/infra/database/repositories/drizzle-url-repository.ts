@@ -37,11 +37,11 @@ export class UrlRepository implements UrlInterface {
   async findByShortCode(shortCode: string): Promise<Url | null> {
     const cached = urlCache.get(shortCode);
     if (cached) {
-      metrics.cacheHits.inc();
+      metrics.cacheHits.inc({ service: "url-shortener" });
       return cached;
     }
 
-    metrics.cacheMisses.inc();
+    metrics.cacheMisses.inc({ service: "url-shortener" });
 
     const result = await db
       .select()
@@ -91,7 +91,7 @@ export class UrlRepository implements UrlInterface {
         createdAt: createdAt,
         expiresAt: expiresAt,
       });
-      metrics.urlsCreated.inc();
+      metrics.urlsCreated.inc({ service: "url-shortener" });
     } catch (error) {
       logger.error("Error creating URL", { error });
       throw new Error("Erro ao criar nova url");
@@ -106,7 +106,7 @@ export class UrlRepository implements UrlInterface {
           clicks: sql`clicks + 1`,
         })
         .where(eq(urls.id, id));
-      metrics.urlClicks.inc();
+      metrics.urlClicks.inc({ service: "url-shortener" });
     } catch (error) {
       logger.error("Error incrementing clicks", { error });
       throw new Error("Erro ao incrementar os cliques");
