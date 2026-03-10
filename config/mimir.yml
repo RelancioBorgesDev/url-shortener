@@ -1,4 +1,4 @@
-# Mimir minimal config for single node
+# Mimir single-node config
 multitenancy_enabled: false
 
 blocks_storage:
@@ -9,3 +9,10 @@ blocks_storage:
 server:
   http_listen_port: 9009
   grpc_listen_port: 9008
+
+ingester:
+  ring:
+    replication_factor: 1
+
+usage_stats:
+  enabled: false

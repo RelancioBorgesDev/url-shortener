@@ -3,7 +3,7 @@ datasources:
   - name: Loki
     type: loki
     access: proxy
-    url: http://loki:3100
+    url: http://loki:3101
     uid: loki
     isDefault: true
 
@@ -18,3 +18,9 @@ datasources:
     access: proxy
     url: http://prometheus:9090
     uid: prometheus
+
+  - name: Mimir
+    type: prometheus
+    access: proxy
+    url: http://mimir:9009/prometheus
+    uid: mimir
