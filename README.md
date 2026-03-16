@@ -1,6 +1,6 @@
 # 🔗 URL Shortener API / API de Encurtador de URLs
 
-<div align="center">
+<div>
 
 [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -105,35 +105,36 @@ sequenceDiagram
 
 ## 🛠️ Technology Stack / Stack de Tecnologias
 
-| Category | Technology | Version | Description |
-|----------|------------|---------|-------------|
-| **Runtime** | Node.js | 22.x | JavaScript runtime |
-| **Language** | TypeScript | 5.x | Type-safe JavaScript |
-| **Framework** | Fastify | 5.x | High-performance web framework |
-| **Database** | PostgreSQL | 15+ | Relational database |
-| **ORM** | Drizzle | 0.44.x | Lightweight TypeScript ORM |
-| **Validation** | Zod | 3.x | Schema validation |
-| **Container** | Docker | 24.x | Containerization |
-| **Reverse Proxy** | Traefik | 3.x | Routing & load balancing |
-| **Metrics** | Prometheus | 2.x | Metrics collection |
-| **Tracing** | OpenTelemetry | 1.x | Distributed tracing |
-| **Logging** | Loki | 2.x | Log aggregation |
+| Category          | Technology    | Version | Description                    |
+| ----------------- | ------------- | ------- | ------------------------------ |
+| **Runtime**       | Node.js       | 22.x    | JavaScript runtime             |
+| **Language**      | TypeScript    | 5.x     | Type-safe JavaScript           |
+| **Framework**     | Fastify       | 5.x     | High-performance web framework |
+| **Database**      | PostgreSQL    | 15+     | Relational database            |
+| **ORM**           | Drizzle       | 0.44.x  | Lightweight TypeScript ORM     |
+| **Validation**    | Zod           | 3.x     | Schema validation              |
+| **Container**     | Docker        | 24.x    | Containerization               |
+| **Reverse Proxy** | Traefik       | 3.x     | Routing & load balancing       |
+| **Metrics**       | Prometheus    | 2.x     | Metrics collection             |
+| **Tracing**       | OpenTelemetry | 1.x     | Distributed tracing            |
+| **Logging**       | Loki          | 2.x     | Log aggregation                |
 
 ### Why These Technologies?
 
-| Technology | Rationale |
-|------------|------------|
-| **Fastify** | 3-4x faster than Express, built-in TypeScript support, low overhead |
-| **Drizzle ORM** | Lightweight, type-safe, SQL-like syntax, excellent performance |
-| **PostgreSQL** | Robust ACID compliance, excellent JSON support, mature ecosystem |
-| **Traefik** | Automatic service discovery, Let's Encrypt integration, Kubernetes support |
-| **OpenTelemetry** | Vendor-neutral, standard for observability |
+| Technology        | Rationale                                                                  |
+| ----------------- | -------------------------------------------------------------------------- |
+| **Fastify**       | 3-4x faster than Express, built-in TypeScript support, low overhead        |
+| **Drizzle ORM**   | Lightweight, type-safe, SQL-like syntax, excellent performance             |
+| **PostgreSQL**    | Robust ACID compliance, excellent JSON support, mature ecosystem           |
+| **Traefik**       | Automatic service discovery, Let's Encrypt integration, Kubernetes support |
+| **OpenTelemetry** | Vendor-neutral, standard for observability                                 |
 
 ---
 
 ## ✨ Features / Funcionalidades
 
 ### Core Features
+
 - ✅ **URL Shortening** - Create short codes with auto-generation
 - ✅ **Redirect Tracking** - Track clicks with IP, user-agent, geo data
 - ✅ **Analytics** - View click statistics per URL
@@ -141,16 +142,19 @@ sequenceDiagram
 - ✅ **Rate Limiting** - Configurable request limits
 
 ### Performance Features
+
 - ⚡ **In-Memory Caching** - 5-minute TTL cache for frequently accessed URLs
 - 📊 **Database Indexing** - Optimized indexes on short_code, created_at
 - 🔄 **Async Analytics** - Non-blocking analytics tracking
 
 ### Security Features
+
 - 🔒 **Input Validation** - Block dangerous protocols (javascript:, data:)
 - 🚫 **Private IP Blocking** - Prevent redirection to internal networks
 - ✅ **Type-safe** - End-to-end TypeScript with Zod validation
 
 ### Observability
+
 - 📈 **Prometheus Metrics** - Request duration, cache hits, URL clicks
 - 📝 **Structured Logging** - JSON logs with request correlation
 - 🏥 **Health Checks** - Liveness, readiness, and full health endpoints
@@ -162,12 +166,12 @@ sequenceDiagram
 
 ### Prerequisites
 
-| Tool | Version |
-|------|---------|
-| Node.js | 22.x |
-| Docker | 24.x |
-| Docker Compose | 2.x |
-| PostgreSQL | 15+ (optional, via Docker) |
+| Tool           | Version                    |
+| -------------- | -------------------------- |
+| Node.js        | 22.x                       |
+| Docker         | 24.x                       |
+| Docker Compose | 2.x                        |
+| PostgreSQL     | 15+ (optional, via Docker) |
 
 ### Quick Start (Development)
 
@@ -180,7 +184,7 @@ cd url-shortcut
 npm install
 
 # Start PostgreSQL with Docker
-docker-compose up -d postgres
+docker compose up -d postgres
 
 # Run migrations
 npx drizzle-kit push
@@ -193,13 +197,13 @@ npm run dev
 
 ```bash
 # Start all services (API + Database + Traefik)
-docker-compose up -d
+docker compose up -d
 
 # View logs
-docker-compose logs -f api
+docker compose logs -f url-shortener
 
 # Stop services
-docker-compose down
+docker compose down
 ```
 
 ### Environment Setup
@@ -213,10 +217,10 @@ PORT=3333
 NODE_ENV=development
 
 # Database
-POSTGRES_USER=admin
-POSTGRES_PASSWORD=secret
-POSTGRES_DB=urlshortener
-DATABASE_URL=postgresql://admin:secret@localhost:5432/urlshortener
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=docker
+POSTGRES_DB=url-shortener
+DATABASE_URL=postgresql://postgres:docker@localhost:5482/url-shortener
 
 # Rate Limiting
 RATE_LIMIT_MAX=1000
@@ -236,6 +240,7 @@ The API includes interactive Swagger documentation for easy exploration and test
 #### English
 
 The Swagger UI provides:
+
 - Interactive API exploration
 - Request/response examples
 - Schema validation
@@ -244,6 +249,7 @@ The Swagger UI provides:
 #### Português
 
 O Swagger UI oferece:
+
 - Exploração interativa da API
 - Exemplos de requisição/resposta
 - Validação de schema
@@ -263,7 +269,7 @@ Production:  https://api.yourdomain.com
 #### 1. Create Short URL
 
 ```http
-POST /shorten
+POST /api/links
 Content-Type: application/json
 
 {
@@ -275,13 +281,14 @@ Content-Type: application/json
 
 ```json
 {
-  "shorten_url": {
+  "url": {
     "id": "550e8400-e29b-41d4-a716-446655440000",
     "originalUrl": "https://example.com/very/long/url",
     "shortCode": "abc123xy",
     "shortUrl": "http://localhost:3333/abc123xy",
     "clicks": 0,
-    "createdAt": "2024-01-15T10:30:00.000Z"
+    "createdAt": "2024-01-15T10:30:00.000Z",
+    "expiresAt": "2024-02-15T10:30:00.000Z"
   }
 }
 ```
@@ -297,21 +304,22 @@ GET /{shortCode}
 #### 3. List All Short URLs
 
 ```http
-GET /shorten
+GET /api/links
 ```
 
 **Response (200 OK)**
 
 ```json
 {
-  "shorten_urls": [
+  "urls": [
     {
       "id": "550e8400-e29b-41d4-a716-446655440000",
       "originalUrl": "https://example.com",
       "shortCode": "abc123xy",
       "shortUrl": "http://localhost:3333/abc123xy",
       "clicks": 42,
-      "createdAt": "2024-01-15T10:30:00.000Z"
+      "createdAt": "2024-01-15T10:30:00.000Z",
+      "expiresAt": "2024-02-15T10:30:00.000Z"
     }
   ]
 }
@@ -320,7 +328,7 @@ GET /shorten
 #### 4. Delete Short URL
 
 ```http
-DELETE /shorten/{shortCode}
+DELETE /api/links/{shortCode}
 ```
 
 **Response (200 OK)**
@@ -334,30 +342,23 @@ DELETE /shorten/{shortCode}
 #### 5. Get Analytics
 
 ```http
-GET /analytics/{shortCode}
+GET /api/analytics/{shortCode}
 ```
 
 **Response (200 OK)**
 
 ```json
 {
-  "analytics": {
-    "shortCode": "abc123xy",
-    "totalClicks": 42,
-    "clicksByCountry": {
-      "BR": 25,
-      "US": 10,
-      "PT": 7
-    },
-    "recentClicks": [
-      {
-        "ipAddress": "192.168.1.1",
-        "userAgent": "Mozilla/5.0...",
-        "country": "BR",
-        "accessedAt": "2024-01-15T10:30:00.000Z"
-      }
-    ]
-  }
+  "totalClicks": 42,
+  "analytics": [
+    {
+      "ipAddress": "192.168.1.1",
+      "userAgent": "Mozilla/5.0...",
+      "referrer": "https://example.com",
+      "country": "BR",
+      "accessedAt": "2024-01-15T10:30:00.000Z"
+    }
+  ]
 }
 ```
 
@@ -402,28 +403,28 @@ url_shortener_clicks_total 1234
 
 ### Error Responses
 
-| Status | Description |
-|--------|-------------|
-| 400 | Invalid input / URL validation failed |
-| 404 | URL not found or expired |
-| 429 | Rate limit exceeded |
-| 500 | Internal server error |
+| Status | Description                           |
+| ------ | ------------------------------------- |
+| 400    | Invalid input / URL validation failed |
+| 404    | URL not found or expired              |
+| 429    | Rate limit exceeded                   |
+| 500    | Internal server error                 |
 
 ---
 
 ## ⚙️ Environment Variables / Variáveis de Ambiente
 
-| Variable | Type | Default | Description |
-|----------|------|---------|-------------|
-| `HOSTNAME` | string | `0.0.0.0` | Server bind address |
-| `PORT` | number | `3333` | Server port |
-| `NODE_ENV` | string | `development` | Environment (development/production/test) |
-| `DATABASE_URL` | string | - | PostgreSQL connection string |
-| `POSTGRES_USER` | string | - | PostgreSQL username |
-| `POSTGRES_PASSWORD` | string | - | PostgreSQL password |
-| `POSTGRES_DB` | string | - | Database name |
-| `RATE_LIMIT_MAX` | number | `1000` | Max requests per window |
-| `RATE_LIMIT_TIME_WINDOW` | string | `1 minute` | Rate limit window |
+| Variable                 | Type   | Default       | Description                               |
+| ------------------------ | ------ | ------------- | ----------------------------------------- |
+| `HOSTNAME`               | string | `0.0.0.0`     | Server bind address                       |
+| `PORT`                   | number | `3333`        | Server port                               |
+| `NODE_ENV`               | string | `development` | Environment (development/production/test) |
+| `DATABASE_URL`           | string | -             | PostgreSQL connection string              |
+| `POSTGRES_USER`          | string | -             | PostgreSQL username                       |
+| `POSTGRES_PASSWORD`      | string | -             | PostgreSQL password                       |
+| `POSTGRES_DB`            | string | -             | Database name                             |
+| `RATE_LIMIT_MAX`         | number | `1000`        | Max requests per window                   |
+| `RATE_LIMIT_TIME_WINDOW` | string | `1 minute`    | Rate limit window                         |
 
 ---
 
@@ -439,14 +440,14 @@ curl http://localhost:3333/metrics
 
 **Available Metrics:**
 
-| Metric | Type | Description |
-|--------|------|-------------|
-| `http_request_duration_seconds` | Histogram | Request duration |
-| `http_requests_total` | Counter | Total requests |
-| `url_shortener_clicks_total` | Counter | Total redirects |
-| `url_shortener_urls_created_total` | Counter | URLs created |
-| `url_shortener_cache_hits_total` | Counter | Cache hits |
-| `url_shortener_cache_misses_total` | Counter | Cache misses |
+| Metric                             | Type      | Description      |
+| ---------------------------------- | --------- | ---------------- |
+| `http_request_duration_seconds`    | Histogram | Request duration |
+| `http_requests_total`              | Counter   | Total requests   |
+| `url_shortener_clicks_total`       | Counter   | Total redirects  |
+| `url_shortener_urls_created_total` | Counter   | URLs created     |
+| `url_shortener_cache_hits_total`   | Counter   | Cache hits       |
+| `url_shortener_cache_misses_total` | Counter   | Cache misses     |
 
 ### Structured Logging
 
@@ -469,6 +470,7 @@ All logs are JSON-formatted with the following structure:
 ### Grafana Dashboard
 
 Import the included Grafana dashboard for:
+
 - Request rate and latency
 - Cache hit/miss ratio
 - URL click trends
@@ -604,26 +606,26 @@ Coverage:    [See Jest output]
 ### Docker Compose (Development)
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Production with Traefik
 
 ```yaml
 # docker-compose.production.yml
-version: '3.8'
+version: "3.8"
 
 services:
-  api:
+  url-shortener:
     build: .
     environment:
       - DATABASE_URL=postgresql://user:pass@postgres:5432/urlshortener
       - NODE_ENV=production
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`api.yourdomain.com`)"
-      - "traefik.http.routers.api.tls=true"
-      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.url-shortener.rule=Host(`sho.rt`)"
+      - "traefik.http.routers.url-shortener.tls=true"
+      - "traefik.http.routers.url-shortener.entrypoints=websecure"
 
   postgres:
     image: postgres:15
@@ -681,15 +683,15 @@ spec:
 
 ## 🔧 Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server with watch |
-| `npm run start` | Start production server |
-| `npm run build` | Build for production |
-| `npm run test` | Run all tests |
-| `npm run test:unit` | Run unit tests |
-| `npm run test:e2e` | Run e2e tests |
-| `npm run test:watch` | Run tests in watch mode |
+| Script               | Description                         |
+| -------------------- | ----------------------------------- |
+| `npm run dev`        | Start development server with watch |
+| `npm run start`      | Start production server             |
+| `npm run build`      | Build for production                |
+| `npm run test`       | Run all tests                       |
+| `npm run test:unit`  | Run unit tests                      |
+| `npm run test:e2e`   | Run e2e tests                       |
+| `npm run test:watch` | Run tests in watch mode             |
 
 ---
 
