@@ -11,7 +11,7 @@ RUN npm install --omit=dev
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 ENV PORT=3333
 
 RUN addgroup --system --gid 1001 nodejs

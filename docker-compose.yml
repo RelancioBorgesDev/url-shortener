@@ -20,9 +20,9 @@ services:
       - postgres
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV}
       HOSTNAME: 0.0.0.0
-      PORT: 3333
+      PORT: ${PORT}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.shortener.rule=Host(`sho.rt`)"
